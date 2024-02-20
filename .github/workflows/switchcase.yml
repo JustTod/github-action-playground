@@ -1,0 +1,33 @@
+name: Test switch case
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  before_script:
+    name: check branch
+    runs-on: ubuntu-latest
+    outputs:
+      env-stage: ${{ steps.switch-case.outputs.match }}
+    steps:
+    - name: Run switch-case-action
+      uses: thaitype/actions-switch-case@v1
+      id: switch-case
+      with:
+        default: none
+        conditionals-with-values: |
+          ${{ github.base_ref == 'refs/heads/main' }} => prod
+          ${{ github.base_ref == 'refs/heads/staging' }} => stage
+          ${{ github.base_ref == 'refs/heads/develop' }} => dev
+
+  check_output:
+    name: check output
+    runs-on: ubuntu-latest
+    env:
+      STAGE: ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
+    if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
+    steps:
+    - name: check output
+      run: echo $STAGE
