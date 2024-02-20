@@ -1,9 +1,9 @@
 name: Test switch case
 
-on: [push]
-  # pull_request:
-  #   types:
-  #     - closed
+on:
+  pull_request:
+    types:
+      - closed
 
 jobs:
   before_script:
@@ -24,8 +24,6 @@ jobs:
     - name: setup output
       id: setup-output
       run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
-    # - name: setup env
-    #   run: echo "env_stage=${{ steps.switch_case.outputs.match }}" >> $GITHUB_ENV
 
   check_output:
     name: check output
@@ -33,7 +31,9 @@ jobs:
     needs: before_script
     env:
       STAGE: ${{ needs.before_script.outputs.env_stage }}
-    # if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
+    if: |
+      ${{ github.event.pull_request.merged }} &&
+      env.STAGE != "none"
     steps:
     - run: echo ${{ needs.before_script.outputs.env_stage }}
     - name: check output 
