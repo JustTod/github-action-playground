@@ -37,4 +37,6 @@ jobs:
     steps:
     - run: echo ${{ needs.before_script.outputs.env_stage }}
     - name: check output 
-      run: echo $STAGE1
+      run: |
+        echo $STAGE
+        echo "$STAGE"
