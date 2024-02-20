@@ -10,7 +10,7 @@ jobs:
     name: check branch
     runs-on: ubuntu-latest
     outputs:
-      env_stage: ${{ steps.switch-case.outputs.match }}
+      env_stage: ${{ steps.setup-output.outputs.stage }}
     steps:
     - name: Run switch-case-action
       uses: thaitype/actions-switch-case@v1
@@ -22,6 +22,7 @@ jobs:
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
     - name: setup output
+      id: setup-output
       run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
     # - name: setup env
     #   run: echo "env_stage=${{ steps.switch_case.outputs.match }}" >> $GITHUB_ENV
