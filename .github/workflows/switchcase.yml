@@ -21,21 +21,21 @@ jobs:
           ${{ github.ref_name == 'main' }} => prod
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
-    - name: echo1
+    - name: setup output
       run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
-    - name: echo2
-      run: echo ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
+    - name: setup env
+      run: echo "env_stage=${{ steps.switch_case.outputs.match }}" >> $GITHUB_ENV
 
   check_output:
     name: check output
     runs-on: ubuntu-latest
     needs: before_script
     env:
-      STAGE: ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
+      STAGE: ${{ needs.before_script.outputs.env_stage }}
     # if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
     steps:
     - run: |
         echo ${{ github.ref_name }}
-        echo ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
-    - name: check output
-      run: echo "$STAGE"
+        echo ${{ needs.before_script.outputs.env_stage }}
+    - name: check output 
+      run: echo $STAGE1
