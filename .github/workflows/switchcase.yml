@@ -10,28 +10,28 @@ jobs:
     name: check branch
     runs-on: ubuntu-latest
     outputs:
-      env-stage: ${{ steps.switch-case.outputs.match }}
+      env_stage: ${{ steps.switch-case.outputs.match }}
     steps:
     - name: Run switch-case-action
       uses: thaitype/actions-switch-case@v1
-      id: switch-case
+      id: switch_case
       with:
         default: none
         conditionals-with-values: |
           ${{ github.ref_name == 'main' }} => prod
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
-    - run: echo ${{ steps.switch-case.outputs.env-stage }}
+    - run: echo ${{ steps.switch_case.outputs.env_stage }}
 
   check_output:
     name: check output
     runs-on: ubuntu-latest
     env:
-      STAGE: ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
+      STAGE: ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
     # if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
     steps:
     - run: |
         echo ${{ github.ref_name }}
-        echo ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
+        echo ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
     - name: check output
       run: echo $STAGE
