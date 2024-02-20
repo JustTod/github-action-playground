@@ -1,9 +1,9 @@
 name: Test switch case
 
-on:
-  pull_request:
-    types:
-      - closed
+on: [push]
+  # pull_request:
+  #   types:
+  #     - closed
 
 jobs:
   before_script:
@@ -18,17 +18,17 @@ jobs:
       with:
         default: none
         conditionals-with-values: |
-          ${{ github.base_ref == 'main' }} => prod
-          ${{ github.base_ref == 'staging' }} => stage
-          ${{ github.base_ref == 'develop' }} => dev
+          ${{ github.head_ref == 'main' }} => prod
+          ${{ github.head_ref == 'staging' }} => stage
+          ${{ github.head_ref == 'develop' }} => dev
 
   check_output:
     name: check output
     runs-on: ubuntu-latest
     env:
       STAGE: ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
-    if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
+    # if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
     steps:
-    - run: echo ${{ github.base_ref}}
+    - run: echo ${{ github.head_ref}}
     - name: check output
       run: echo $STAGE
