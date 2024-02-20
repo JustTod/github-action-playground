@@ -22,7 +22,7 @@ jobs:
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
     - run: |
-        echo ${{ steps.switch_case.outputs.match }} >> "$GITHUB_OUTPUT"
+        echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
 
   check_output:
     name: check output
