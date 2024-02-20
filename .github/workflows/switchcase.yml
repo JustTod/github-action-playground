@@ -29,5 +29,6 @@ jobs:
       STAGE: ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
     if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
     steps:
+    - run: echo ${{ github.base_ref}}
     - name: check output
       run: echo $STAGE
