@@ -20,9 +20,9 @@ jobs:
         conditionals-with-values: |
           ${{ github.ref_name == 'main' }} => prod
           ${{ github.ref_name == 'staging' }} => stage
-    #       ${{ github.ref_name == 'develop' }} => dev
-    # - name: setup output
-    #   run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
+          ${{ github.ref_name == 'develop' }} => dev
+    - name: setup output
+      run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
     # - name: setup env
     #   run: echo "env_stage=${{ steps.switch_case.outputs.match }}" >> $GITHUB_ENV
 
