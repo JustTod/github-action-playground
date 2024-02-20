@@ -18,9 +18,9 @@ jobs:
       with:
         default: none
         conditionals-with-values: |
-          ${{ github.base_ref == 'refs/heads/main' }} => prod
-          ${{ github.base_ref == 'refs/heads/staging' }} => stage
-          ${{ github.base_ref == 'refs/heads/develop' }} => dev
+          ${{ github.base_ref == 'main' }} => prod
+          ${{ github.base_ref == 'staging' }} => stage
+          ${{ github.base_ref == 'develop' }} => dev
 
   check_output:
     name: check output
