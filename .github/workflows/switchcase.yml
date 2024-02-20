@@ -21,6 +21,7 @@ jobs:
           ${{ github.ref_name == 'main' }} => prod
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
+    - run: echo ${{ steps.switch-case.outputs.env-stage }}
 
   check_output:
     name: check output
