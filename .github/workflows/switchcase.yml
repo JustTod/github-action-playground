@@ -18,9 +18,9 @@ jobs:
       with:
         default: none
         conditionals-with-values: |
-          ${{ github.head_ref == 'main' }} => prod
-          ${{ github.head_ref == 'staging' }} => stage
-          ${{ github.head_ref == 'develop' }} => dev
+          ${{ github.ref_name == 'main' }} => prod
+          ${{ github.ref_name == 'staging' }} => stage
+          ${{ github.ref_name == 'develop' }} => dev
 
   check_output:
     name: check output
@@ -29,6 +29,6 @@ jobs:
       STAGE: ${{ needs.before_script.outputs.switch-case.outputs.env-stage }}
     # if: ${{ github.event.pull_request.merged }} && !($STAGE == "none")
     steps:
-    - run: echo ${{ github.head_ref}}
+    - run: echo ${{ github.ref_name }}
     - name: check output
       run: echo $STAGE
