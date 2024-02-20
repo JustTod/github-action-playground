@@ -21,8 +21,10 @@ jobs:
           ${{ github.ref_name == 'main' }} => prod
           ${{ github.ref_name == 'staging' }} => stage
           ${{ github.ref_name == 'develop' }} => dev
-    - run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
-    - run: echo ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
+    - name: echo1
+      run: echo "stage=${{ steps.switch_case.outputs.match }}" >> "$GITHUB_OUTPUT"
+    - name: echo2
+      run: echo ${{ needs.before_script.outputs.switch_case.outputs.env_stage }}
 
   check_output:
     name: check output
