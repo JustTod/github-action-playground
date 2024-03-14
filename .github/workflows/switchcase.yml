@@ -1,9 +1,14 @@
 name: Test switch case
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+  # pull_request:
+  #   types:
+  #     - closed
 
 jobs:
   before_script:
@@ -31,11 +36,12 @@ jobs:
     needs: before_script
     env:
       STAGE: ${{ needs.before_script.outputs.env_stage }}
-    if: |
-      ${{ github.event.pull_request.merged }} &&
-      env.STAGE != "none"
+    # if: |
+    #   ${{ github.event.pull_request.merged }} &&
+    #   env.STAGE != "none"
     steps:
     - run: echo ${{ needs.before_script.outputs.env_stage }}
+    - run: echo dsk-test-$STAGE
     - name: check output 
       run: |
         echo $STAGE
