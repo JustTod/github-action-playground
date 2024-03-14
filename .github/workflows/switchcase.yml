@@ -41,8 +41,9 @@ jobs:
     #   env.STAGE != "none"
     steps:
     - run: echo ${{ needs.before_script.outputs.env_stage }}
-    - run: echo dsk-test-$STAGE
+    - run: echo "DEST=dsk-test-$STAGE" >> "GITHUB_ENV"
     - name: check output 
       run: |
         echo $STAGE
         echo "$STAGE"
+        echo "DEST"
