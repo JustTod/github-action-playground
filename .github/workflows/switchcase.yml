@@ -41,10 +41,11 @@ jobs:
     #   env.STAGE != "none"
     steps:
     - run: echo ${{ needs.before_script.outputs.env_stage }}
-    - run: echo "DEST=dsk-test-$STAGE" >> "GITHUB_ENV"
+    - run: echo ${{ format('DEST1=dsk-test-$STAGE') }} >> "GITHUB_ENV"
+    - run: echo ${{ format('DEST2=dsk-test-{0}', needs.before_script.outputs.env_stage ) }} >> "GITHUB_ENV"
     - name: check output 
       run: |
         echo $STAGE
         echo "$STAGE"
         echo "dsk-test-$STAGE"
-        echo "$DEST"
+        echo "$DEST1"
