@@ -46,4 +46,5 @@ jobs:
       run: |
         echo $STAGE
         echo "$STAGE"
-        echo "DEST"
+        echo "dsk-test-$STAGE"
+        echo "$DEST"
