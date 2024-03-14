@@ -50,3 +50,7 @@ jobs:
         echo "dsk-test-$STAGE"
         echo "$DEST1"
         echo "$DEST2"
+    - name: printf
+      run: |
+        printf '%s\n' "$DEST1"
+        printf '%s\n' "$DEST2"
