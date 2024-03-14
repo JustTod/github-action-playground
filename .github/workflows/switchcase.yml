@@ -40,6 +40,14 @@ jobs:
     #   ${{ github.event.pull_request.merged }} &&
     #   env.STAGE != "none"
     steps:
+    - name: Set the value
+      id: step_one
+      run: |
+        echo "action_state=yellow" >> "$GITHUB_ENV"
+    - name: Use the value
+      id: step_two
+      run: |
+        printf '%s\n' "$action_state" # This will output 'yellow'
     - run: echo ${{ needs.before_script.outputs.env_stage }}
     - run: echo ${{ format('DEST1=dsk-test-$STAGE') }} >> "GITHUB_ENV"
     - run: echo ${{ format('DEST2=dsk-test-{0}', needs.before_script.outputs.env_stage ) }} >> "GITHUB_ENV"
