@@ -49,3 +49,4 @@ jobs:
         echo "$STAGE"
         echo "dsk-test-$STAGE"
         echo "$DEST1"
+        echo "$DEST2"
